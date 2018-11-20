@@ -5,6 +5,9 @@ from flask import current_app
 
 from authutils.errors import AuthError
 from authutils.token import store_session_token
+from cdislogging import get_logger
+
+logger = get_logger(__name__)
 
 
 def client_do_authorize():
@@ -25,4 +28,5 @@ def client_do_authorize():
     except KeyError as e:
         raise AuthError("error in token response: {}".format(token))
     except (OAuth2Error, OAuthException) as e:
+        logger.exception("caught oauth2 exception from authlib")
         raise AuthError(str(e))
