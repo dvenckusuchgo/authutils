@@ -16,7 +16,7 @@ def get_keys_url(issuer):
         [issuer.strip("/"), ".well-known", "openid-configuration"]
     )
     try:
-        jwks_uri = httpx.get(openid_cfg_path).json().get("jwks_uri", "")
+        jwks_uri = httpx.get(openid_cfg_path, follow_redirects=True).json().get("jwks_uri", "")
         return jwks_uri
     except:
         return "/".join([issuer.strip("/"), "jwt", "keys"])

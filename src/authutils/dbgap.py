@@ -90,7 +90,7 @@ class dbGaPXReferencer(object):
             self.logger.info("Pulling telemetry report from {0}".format(url))
 
             # Request the XML
-            with httpx.Client(proxies=self.proxies) as client:
+            with httpx.Client(proxies=self.proxies, follow_redirects=True) as client:
                 r = client.get(url)
             if r.status_code != 200:
                 msg = (
@@ -211,7 +211,7 @@ class dbGaPXReferencer(object):
         self.logger.info("Pulling telemetry report from {0}".format(url))
 
         # Request the XML
-        with httpx.Client(proxies=self.proxies) as client:
+        with httpx.Client(proxies=self.proxies, follow_redirects=True) as client:
             r = client.get(url)
         if r.status_code == 400:
             msg = "Project appears not to exist in dbGaP."
